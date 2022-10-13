@@ -16,7 +16,7 @@ start: ## Start project running in a non-detached mode.
 startbg: ## Start project running in detached mode - background.
 	@docker-compose up -d
 startprodbg: ## Start using prod config
-	@docker-compose -f docker-compose.prod.yaml up -d
+	@docker-compose -f docker-compose-prod.yaml up -d
 stop: ## Stop the running project.
 	@docker-compose stop
 test: ## Run unit tests
