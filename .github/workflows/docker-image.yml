@@ -35,7 +35,8 @@ jobs:
         cp -r pyproject.toml src/tests/stub.toml
     - name: Run Pytest
       run: |
-        pytest src/tests
+        cd src/
+        pytest 
 
   push:
 
