@@ -8,39 +8,42 @@ on:
 
 jobs:
 
-  fetchtag:
-    runs-on: ubuntu-latest
-    name: Create tag and artifact
-    steps:
-    - name: Checkout repo
-      uses: actions/checkout@v3
-    - name: Build container
-      shell: bash
-      run: |
-        docker build . --file Dockerfile --tag thomasve/emailsanitizer:latest
-        docker start emailsanitizer
-        make version > version.txt
-    - name: Create version artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: version
-        path: version.txt
+  # fetchtag:
+  #   runs-on: ubuntu-latest
+  #   name: Create tag and artifact
+  #   steps:
+  #   - name: Checkout repo
+  #     uses: actions/checkout@v3
+  #   - name: Build container
+  #     shell: bash
+  #     run: |
+  #       docker build . --file Dockerfile --tag thomasve/emailsanitizer:latest
+  #       docker start emailsanitizer
+  #       make version > version.txt
+  #   - name: Create version artifact
+  #     uses: actions/upload-artifact@v3
+  #     with:
+  #       name: version
+  #       path: version.txt
 
   build:
 
     runs-on: ubuntu-latest
     name: Make build
-    needs: fetchtag
+    # needs: fetchtag
     steps:
-    - name: Download artifact and save version
-      uses: actions/download-artifact@v3
-      with:
-        name: version
+    # - name: Download artifact and save version
+    #   uses: actions/download-artifact@v3
+    #   with:
+    #     name: version
     - name: Checkout repo
       uses: actions/checkout@v3
     - name: Get version and tag image
       run: |
-        version=`cat version.txt`
+        # version=`cat version.txt`
+        make build
+        make startbg
+        version=`make version`
         docker build . --file Dockerfile --tag thomasve/emailsanitizer:$version
 
   test:
@@ -52,9 +55,9 @@ jobs:
       uses: actions/checkout@v3
     - name: Run tests
       run: |
-        docker build . --file Dockerfile --tag thomasve/emailsanitizer:latest
-        docker start emailsanitizer
-        docker exec -it emailsanitizer pytest
+        make build
+        make startbg
+        make test
 
   push:
 
