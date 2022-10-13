@@ -63,18 +63,18 @@ jobs:
 
     name: Push to registry.
     runs-on: ubuntu-latest
-    needs: fetchtag
     steps:
-    - name: Download artifact and save version
-      uses: actions/download-artifact@v3
-      with:
-        name: version
+    # - name: Download artifact and save version
+    #   uses: actions/download-artifact@v3
+    #   with:
+    #     name: version
     - name: Checkout repo
       uses: actions/checkout@v3
     - name: Get version and tag image
       run: |
-        version=`cat version.txt`
-        docker build . --file Dockerfile --tag thomasve/emailsanitizer:$version
+        make build
+        make startbg
+        version=`make version`
     - name: Login to registry
       uses: docker/login-action@v2
       with:
