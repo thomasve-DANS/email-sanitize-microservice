@@ -65,6 +65,6 @@ jobs:
         password: ${{ secrets.DOCKER_HUB_ACCESS_PASSWORD }}
     - name: Push to dockerhub
       run: |
-        make VERSION=${{ env.version }}
-        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/emailsanitizer:${{ env.version }}
+        make VERSION=${{ env.version }} tag
+        docker push thomasve/emailsanitizer:${{ env.version }}
 
