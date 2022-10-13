@@ -26,26 +26,6 @@ jobs:
   #       name: version
   #       path: version.txt
 
-  build:
-
-    runs-on: ubuntu-latest
-    name: Make build
-    # needs: fetchtag
-    steps:
-    # - name: Download artifact and save version
-    #   uses: actions/download-artifact@v3
-    #   with:
-    #     name: version
-    - name: Checkout repo
-      uses: actions/checkout@v3
-    - name: Get version and tag image
-      run: |
-        # version=`cat version.txt`
-        make build
-        make startbg
-        version=`make version`
-        docker build . --file Dockerfile --tag thomasve/emailsanitizer:$version
-
   test:
 
     runs-on: ubuntu-latest
@@ -56,7 +36,7 @@ jobs:
     - name: Run tests
       run: |
         make build
-        make startbg
+        make startprodbg
         make test
 
   push:
@@ -65,16 +45,12 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     steps:
-    # - name: Download artifact and save version
-    #   uses: actions/download-artifact@v3
-    #   with:
-    #     name: version
     - name: Checkout repo
       uses: actions/checkout@v3
     - name: Get version and tag image
       run: |
         make build
-        make startbg
+        make startprodbg
         version=`make version`
     - name: Login to registry
       uses: docker/login-action@v2

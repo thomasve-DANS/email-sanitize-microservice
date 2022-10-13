@@ -1,0 +1,9 @@
+services:
+  emailsanitizer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ${CONTAINER_NAME}
+    command: ["uvicorn", "main:app", "--proxy-headers", "--host", "0.0.0.0", "--port", "${PORT}"]
+    ports:
+      - "${PORT}:${PORT}"
