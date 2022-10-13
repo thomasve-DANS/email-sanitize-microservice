@@ -17,16 +17,15 @@ startbg: ## Start project running in detached mode - background.
 	@docker-compose up -d
 stop: ## Stop the running project.
 	@docker-compose stop
-test:
+test: ## Run unit tests
 	@docker exec -it ${CONTAINER_NAME} pytest
 copy-poetry-files: ## Copies poetry files inside container
-	@docker cp ./pyproject.toml ${PROJECT_CONTAINER_NAME}:/pyproject.toml
-	@docker exec -it ${CONTAINER_NAME} poetry update
+	@docker cp ./pyproject.toml ${CONTAINER_NAME}:/pyproject.toml
 export-poetry-files: ## Exports poetry files from inside container
-	@docker cp ${CONTAINER_NAME}:/pyproject.toml ./backend/pyproject.toml
-	@docker cp ${CONTAINER_NAME}:/poetry.lock ./backend/poetry.lock
+	@docker cp ${CONTAINER_NAME}:/pyproject.toml ./pyproject.toml
+	@docker cp ${CONTAINER_NAME}:/poetry.lock ./poetry.lock
 update-requirements: copy-poetry-files
-	@docker exec -it ${CONTAINER_NAME} poetry update ${package_name}
+	@docker exec -it ${CONTAINER_NAME} poetry update
 	make export-poetry-files ## Export requirements and lock file
 add-poetry-package: copy-poetry-files ## Adds a poetry package, using backend container to resolve. Expects: package_name arg. Ex: make add-poetry-package package_name="foo"
 	@docker exec -it ${CONTAINER_NAME} poetry add ${package_name}
@@ -34,7 +33,10 @@ add-poetry-package: copy-poetry-files ## Adds a poetry package, using backend co
 remove-poetry-package: copy-poetry-files ## Removes a poetry package. Similar to adding.
 	@docker exec -it ${CONTAINER_NAME} poetry remove ${package_name}
 	make export-poetry-files
-shell-be: ## Enter system shell in backend container
+shell: ## Enter system shell in backend container
 	@docker-compose exec ${CONTAINER_NAME} sh
 python-shell-be: ## Enter into IPython shell in backend container
 	@docker-compose exec ${CONTAINER_NAME} python -m IPython
+version:  ## Export version
+	@docker cp ./pyproject.toml ${CONTAINER_NAME}:/src/stub.toml
+	@docker exec -it ${CONTAINER_NAME} python version.py

@@ -1,12 +1,10 @@
 import re
 
 from fastapi import FastAPI, Response
-from pydantic import BaseModel
+from pydantic import BaseModel, version
 
-
+from version import get_version
 app = FastAPI()
-
-VERSION = "0.1.0"
 
 class Data(BaseModel):
     data: str
@@ -14,7 +12,8 @@ class Data(BaseModel):
 
 @app.get("/version")
 async def info():
-    return {"version": VERSION}
+    result = get_version()
+    return {"version": result}
 
 @app.post("/sanitize")
 async def sanitize(input_data: Data, response: Response):

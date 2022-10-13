@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "fastapi-docker-cookiecutter"
+name = "email-sanitizer-microservice"
 version = "0.1.0"
-description = "A project allowing one to set up a FastAPI based Microservice, using cookiecutter"
+description = "A project allowing one to sanitize email addresses from a request."
 authors = ["Thomas van Erven"]
 
 [tool.poetry.dependencies]

@@ -1,5 +1,5 @@
 services:
-  application:
+  emailsanitizer:
     build:
       context: .
       dockerfile: Dockerfile
