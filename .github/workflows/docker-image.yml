@@ -33,10 +33,13 @@ jobs:
     steps:
     - name: Checkout repo
       uses: actions/checkout@v3
-    - name: Run tests
+    - name: Install poetry
       run: |
-        make startprodbg
-        make test
+        poetry install
+        pip install pytest
+    - name: Run Pytest
+      run: |
+        pytest
 
   push:
 
@@ -50,6 +53,7 @@ jobs:
       run: |
         make startprodbg
         version=`make version`
+        make tag
     - name: Login to registry
       uses: docker/login-action@v2
       with:

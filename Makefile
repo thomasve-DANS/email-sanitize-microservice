@@ -42,3 +42,5 @@ python-shell-be: ## Enter into IPython shell in backend container
 version:  ## Export version
 	@docker cp ./pyproject.toml ${CONTAINER_NAME}:/src/stub.toml
 	@docker exec -it ${CONTAINER_NAME} python version.py
+tag:
+	@docker build . docker build . --file Dockerfile --tag thomasve/emailsanitizer:$version
