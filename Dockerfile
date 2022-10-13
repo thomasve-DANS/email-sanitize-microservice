@@ -10,6 +10,8 @@ RUN pip install poetry
 
 COPY pyproject.toml .
 
+COPY pyproject.toml ./stub.toml
+
 RUN poetry config virtualenvs.create false
 
 RUN poetry install
