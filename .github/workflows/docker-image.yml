@@ -63,6 +63,7 @@ jobs:
 
     name: Push to registry.
     runs-on: ubuntu-latest
+    needs: test
     steps:
     # - name: Download artifact and save version
     #   uses: actions/download-artifact@v3
