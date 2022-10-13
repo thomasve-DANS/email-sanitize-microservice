@@ -8,11 +8,75 @@ on:
 
 jobs:
 
+  fetchtag:
+    runs-on: ubuntu-latest
+    name: Create tag and artifact
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+    - name: Build container
+      shell: bash
+      run: |
+        docker build . --file Dockerfile --tag thomasve/emailsanitizer:latest
+        docker start emailsanitizer
+        make version > version.txt
+    - name: Create version artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: version
+        path: version.txt
+
   build:
 
     runs-on: ubuntu-latest
-
+    name: Make build
+    needs: fetchtag
     steps:
-    - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    - name: Download artifact and save version
+      uses: actions/download-artifact@v3
+      with:
+        name: version
+    - name: Checkout repo
+      uses: actions/checkout@v3
+    - name: Get version and tag image
+      run: |
+        version=`cat version.txt`
+        docker build . --file Dockerfile --tag thomasve/emailsanitizer:$version
+
+  test:
+
+    runs-on: ubuntu-latest
+    name: Run tests
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+    - name: Run tests
+      run: |
+        docker build . --file Dockerfile --tag thomasve/emailsanitizer:latest
+        docker start emailsanitizer
+        docker exec -it emailsanitizer pytest
+
+  push:
+
+    name: Push to registry.
+    runs-on: ubuntu-latest
+    needs: fetchtag
+    steps:
+    - name: Download artifact and save version
+      uses: actions/download-artifact@v3
+      with:
+        name: version
+    - name: Checkout repo
+      uses: actions/checkout@v3
+    - name: Get version and tag image
+      run: |
+        version=`cat version.txt`
+        docker build . --file Dockerfile --tag thomasve/emailsanitizer:$version
+    - name: Login to registry
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_ACCESS_PASSWORD }}
+    - name: Push to dockerhub
+      run: docker push thomasve/emailsanitizer:$version
+
