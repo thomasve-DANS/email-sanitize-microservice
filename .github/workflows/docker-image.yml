@@ -29,9 +29,13 @@ jobs:
         pip install poetry
         poetry config virtualenvs.create false
         poetry install
+    - name: Perform gruesome hack
+      run: |
+        cp -r pyproject.toml src/stub.toml
+        cp -r pyproject.toml src/tests/stub.toml
     - name: Run Pytest
       run: |
-        pytest
+        pytest src/tests
 
   push:
 

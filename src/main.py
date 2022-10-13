@@ -3,7 +3,7 @@ import re
 from fastapi import FastAPI, Response
 from pydantic import BaseModel, version
 
-from version import get_version
+from .version import get_version
 
 app = FastAPI()
 
