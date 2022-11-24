@@ -2,12 +2,12 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: email-sanitize-microservice
+  links:
+    - url: https://emailsanitizer.labs.dans.knaw.nl/docs
+      title: API documentation
+      icon: dashboard
   annotations:
     github.com/project-slug: thomasve-DANS/email-sanitize-microservice
-    links:
-      - url: https://emailsanitizer.labs.dans.knaw.nl/docs
-        title: API documentation
-        icon: dashboard
 spec:
   type: other
   lifecycle: unknown
