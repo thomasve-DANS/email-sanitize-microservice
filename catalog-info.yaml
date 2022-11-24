@@ -1,4 +1,4 @@
-apiVersion: 0.1.2
+apiVersion: API
 kind: API
 metadata:
   name: email-sanitize-microservice
