@@ -13,15 +13,13 @@ spec:
     openapi: 3.0.2
     info:
       title: FastAPI
-      version: 0.1.0
+      version: 0.1.2
+    servers:
+      - url: https://emailsanitizer.labs.dans.knaw.nl/
     paths:
-      /version:
+      "/version":
         get:
-          summary: Info
-      /sanitize:
+          summary: Simple tool to get version number from API.
+      "/sanitize":
         post:
-          summary: Sanitize
-          description: Simple function to strip email addresses from file.
-          operationId: sanitize_sanitize_post
-          requestBody:
-            required: true
+          summary: Simple function to strip email addresses from file.
