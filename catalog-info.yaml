@@ -1,11 +1,12 @@
-apiVersion: backstage.io/v1alpha1
+apiVersion: 0.1.2
 kind: API
 metadata:
   name: email-sanitize-microservice
+  description: API to sanitize email addresses from string input
   annotations:
     github.com/project-slug: thomasve-DANS/email-sanitize-microservice
 spec:
-  type: microservice
+  type: openapi
   lifecycle: production
   owner: thomasve
   definition: $text: https://emailsanitizer.labs.dans.knaw.nl/openapi.json
