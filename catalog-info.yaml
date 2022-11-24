@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: email-sanitize-microservice
+  annotations:
+    github.com/project-slug: thomasve-DANS/email-sanitize-microservice
+spec:
+  type: other
+  lifecycle: unknown
+  owner: thomasve
