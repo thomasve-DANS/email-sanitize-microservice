@@ -9,4 +9,5 @@ spec:
   type: openapi
   lifecycle: production
   owner: thomasve
-  definition: $text: https://emailsanitizer.labs.dans.knaw.nl/openapi.json
+  definition: 
+    $text: https://emailsanitizer.labs.dans.knaw.nl/openapi.json
