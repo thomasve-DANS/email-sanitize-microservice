@@ -5,6 +5,7 @@ metadata:
   description: API to sanitize email addresses from string input
   annotations:
     github.com/project-slug: thomasve-DANS/email-sanitize-microservice
+  tags: ["python","fastapi","labs","odissei"]
 spec:
   type: openapi
   lifecycle: production
