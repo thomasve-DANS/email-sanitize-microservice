@@ -24,3 +24,12 @@ spec:
       "/sanitize":
         post:
           summary: Simple function to strip email addresses from file.
+catalog:
+  rules:
+    - allow: [Component, System, API, Group, User, Template, Location]
+  locations:
+    # Email sanitizer project
+    - type: url
+      target: https://github.com/thomasve-DANS/email-sanitize-microservice/edit/master/catalog-info.yaml
+      name: Emailsanitizer
+      tags: ["dans","github"]
