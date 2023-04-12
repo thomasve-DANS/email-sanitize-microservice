@@ -12,12 +12,12 @@ class Data(BaseModel):
     replacement_email: str = ""
 
 @app.get("/version")
-async def info():
+def info():
     result = get_version()
     return {"version": result}
 
 @app.post("/sanitize")
-async def sanitize(input_data: Data, response: Response):
+def sanitize(input_data: Data, response: Response):
     """Simple function to strip email addresses from file. """
     email_regex = '([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+'
     if not input_data.data:
