@@ -9,7 +9,7 @@ client = TestClient(app=app)
 def test_version():
     response = client.get('/version')
     assert response.status_code == 200
-    assert response.json() == {"version": "0.1.1"}
+    assert response.json() == {"version": "0.1.2"}
 
 
 def test_empty_body():
