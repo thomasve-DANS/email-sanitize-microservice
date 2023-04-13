@@ -1,4 +1,4 @@
-import tomli
+import tomllib
 
 
 def get_version():

@@ -1,4 +1,4 @@
-FROM python:3.9-slim
+FROM thomasve/fastapi-cookiecutter-base:3.11
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
